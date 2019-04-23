@@ -2,6 +2,7 @@ import { Handler, Context, Callback, APIGatewayProxyEvent } from "aws-lambda"
 import { Environment } from "./Environment"
 import { GatewayEventInteractor, BasicResponses, BasicResponse, BlizzyService } from "blizzy-core";
 import { CharacterService } from "blizzy-core";
+import { RequesterService } from "blizzy-core/dist/services/requesterService";
 
 const character: Handler = async (event: APIGatewayProxyEvent, context: Context, callback: Callback) => {
   const gatewayEventInteractor = new GatewayEventInteractor(event)
@@ -19,7 +20,8 @@ const character: Handler = async (event: APIGatewayProxyEvent, context: Context,
 
   const environment = new Environment()
   console.log(environment)
-  const blizzyService = new BlizzyService(environment)
+  const requesterService = new RequesterService(environment, token)
+  const blizzyService = new BlizzyService(requesterService)
   const characterService = new CharacterService(blizzyService)
   return await characterService.getCharacterInfo(token, characterName, serverName)
 }
