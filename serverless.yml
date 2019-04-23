@@ -27,6 +27,10 @@ provider:
   runtime: nodejs8.10
   stage: dev
   region: us-west-2
+  environment:
+    LOCALE: en_US
+    APIKEY: ''
+    BASE_URL: https://us.api.blizzard.com
 
 # you can overwrite defaults here
 #  stage: dev
