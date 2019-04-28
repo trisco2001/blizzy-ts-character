@@ -70,15 +70,18 @@ package:
     - '!node_modules/blizzy-core/**'
 
 functions:
-  character:
+  characters:
     handler: handler.character
-
-#    The following are a few example events you can configure
-#    NOTE: Please make sure to change your handler code to work with those events
-#    Check the event documentation for details
     events:
       - http:
           path: characters/{serverName}/{characterName}
+          method: get
+          
+  races:
+    handler: handler.races
+    events:
+      - http:
+          path: races
           method: get
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
