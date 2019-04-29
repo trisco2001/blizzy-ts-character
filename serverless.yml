@@ -83,6 +83,13 @@ functions:
       - http:
           path: races
           method: get
+          
+  classes:
+    handler: handler.classes
+    events:
+      - http:
+          path: classes
+          method: get
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)

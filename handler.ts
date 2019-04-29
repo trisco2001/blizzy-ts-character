@@ -1,6 +1,6 @@
 import { Handler, Context, Callback, APIGatewayProxyEvent } from "aws-lambda"
 import { Environment } from "./Environment"
-import { GatewayEventInteractor, BasicResponses, BasicResponse, BlizzyService, RaceService } from "blizzy-core";
+import { GatewayEventInteractor, BasicResponses, BasicResponse, BlizzyService, RaceService, ClassService } from "blizzy-core";
 import { CharacterService } from "blizzy-core";
 import { RequesterService } from "blizzy-core/dist/services/requesterService";
 
@@ -38,8 +38,24 @@ const races: Handler = async (event: APIGatewayProxyEvent, context: Context, cal
   console.log(environment)
   const requesterService = new RequesterService(environment, token)
   const blizzyService = new BlizzyService(requesterService)
-  const characterService = new RaceService(blizzyService)
-  return await characterService.getRaces()
+  const raceService = new RaceService(blizzyService)
+  return await raceService.getRaces()
 }
 
-export { character, races }
+const classes: Handler = async (event: APIGatewayProxyEvent, context: Context, callback: Callback) => {
+  const gatewayEventInteractor = new GatewayEventInteractor(event)
+  const token = gatewayEventInteractor.queryString('token')
+
+  if (token == null) {
+    return BasicResponses.authorizationNeeded("The token is needed to process this request.")
+  }
+
+  const environment = new Environment()
+  console.log(environment)
+  const requesterService = new RequesterService(environment, token)
+  const blizzyService = new BlizzyService(requesterService)
+  const classService = new ClassService(blizzyService)
+  return await classService.getClasses()
+}
+
+export { character, races, classes }
