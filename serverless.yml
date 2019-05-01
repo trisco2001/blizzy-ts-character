@@ -93,7 +93,7 @@ package:
 
 functions:
   create:
-    handler: handler.userCharactersCreate
+    handler: handler.createUserCharacters
     events:
       - http:
           path: userCharacters
@@ -101,11 +101,27 @@ functions:
           cors: true
 
   list:
-    handler: handler.userCharactersList
+    handler: handler.listUserCharacters
     events:
       - http:
           path: userCharacters
           method: get
+          cors: true
+
+  listForUser:
+    handler: handler.listUserCharacters
+    events:
+      - http:
+          path: userCharacters/{userId}
+          method: get
+          cors: true
+
+  update:
+    handler: handler.updateUserCharacters
+    events:
+      - http:
+          path: userCharacters/{id}
+          method: put
           cors: true
 
   characters:

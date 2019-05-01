@@ -1,12 +1,28 @@
 import { Handler, Context, Callback, APIGatewayProxyEvent } from "aws-lambda"
-import { BasicResponse } from "blizzy-core";
+import { BasicResponse, GatewayEventInteractor } from "blizzy-core";
 import dynamodb from './dynamodb';
 
 const userCharactersList: Handler = (event: APIGatewayProxyEvent, context: Context, callback: Callback) => {
-    const params = {
-        TableName: 'botanybay-character-dev-UserCharacters',
-        Limit: 10, // optional (limit the number of items to evaluate)
-    };
+    const gatewayEventInteractor = new GatewayEventInteractor(event)
+    const userId = gatewayEventInteractor.path('userId')
+
+    const tableName = 'botanybay-character-dev-UserCharacters'
+    let params: any
+    if (userId == null) {
+        params = {
+            TableName: tableName,
+            Limit: 10,
+        }
+    } else {
+        params = {
+            TableName: 'botanybay-character-dev-UserCharacters',
+            Limit: 10,
+            ExpressionAttributeValues: {
+                ':userId': userId,
+            },
+            FilterExpression: 'userId = :userId'
+        }
+    }
     dynamodb.scan(params, function(err: any, data: any) {
         if (err) {
             console.log(err)
