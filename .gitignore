@@ -1,4 +1,4 @@
 .serverless/
 .build/
 node_modules/
-
+.dynamodb/

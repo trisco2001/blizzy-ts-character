@@ -1,5 +1,6 @@
 import { Handler, Context, Callback, APIGatewayProxyEvent } from "aws-lambda"
 import { BasicResponses, BasicResponse } from "blizzy-core";
+import { PostingUserCharacters } from "./entities";
 
 import { v4 as uuid } from "uuid";
 import dynamodb from './dynamodb';

@@ -1,14 +1,14 @@
-interface Character {
+export interface Character {
     name: string
     server: string
 }
 
-interface PostingUserCharacters {
+export interface PostingUserCharacters {
     userId: string
     characters: [Character]
 }
 
-interface PostedUserCharacters {
+export interface PostedUserCharacters {
     id: string
     userId: string
     characters: [Character]
