@@ -71,21 +71,21 @@ package:
 
 functions:
   characters:
-    handler: handler.character
+    handler: handler.characterHandler
     events:
       - http:
           path: characters/{serverName}/{characterName}
           method: get
           
   races:
-    handler: handler.races
+    handler: handler.racesHandler
     events:
       - http:
           path: races
           method: get
           
   classes:
-    handler: handler.classes
+    handler: handler.classesHandler
     events:
       - http:
           path: classes
